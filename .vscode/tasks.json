@@ -1,0 +1,52 @@
+// See https://go.microsoft.com/fwlink/?LinkId=733558
+// for the documentation about the tasks.json format
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Initialize",
+      "command": "terraform init test",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "Validate",
+      "command": "terraform validate test",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "Format",
+      "command": "terraform fmt -recursive",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "Apply",
+      "command": "terraform apply -auto-approve test",
+      "type": "shell",
+      "problemMatcher": [],
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Apply Idempotency Check",
+      "command": "terraform plan -detailed-exitcode test",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "Destroy",
+      "command": "terraform destroy -auto-approve test",
+      "type": "shell",
+      "problemMatcher": []
+    },
+    {
+      "label": "Destroy Idempotency Check",
+      "command": "terraform plan -detailed-exitcode -destroy test",
+      "type": "shell"
+    }
+  ]
+}
