@@ -2,6 +2,13 @@ resource "kubernetes_namespace" "this" {
   metadata {
     name = var.id
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations,
+      metadata[0].labels
+    ]
+  }
 }
 
 resource "kubernetes_cluster_role_binding" "this" {
@@ -21,15 +28,29 @@ resource "kubernetes_cluster_role_binding" "this" {
     api_group = ""
     namespace = kubernetes_namespace.this.metadata[0].name
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations,
+      metadata[0].labels
+    ]
+  }
 }
 
 resource "kubernetes_service_account" "this" {
+  automount_service_account_token = true
+  
   metadata {
     name      = "this"
     namespace = kubernetes_namespace.this.metadata[0].name
   }
 
-  automount_service_account_token = true
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations,
+      metadata[0].labels
+    ]
+  }
 }
 
 resource "kubernetes_deployment" "this" {
@@ -107,6 +128,13 @@ resource "kubernetes_deployment" "this" {
       }
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations,
+      metadata[0].labels
+    ]
+  }
 }
 
 resource "kubernetes_service" "this" {
@@ -160,6 +188,13 @@ resource "kubernetes_ingress" "this" {
       }
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations,
+      metadata[0].labels
+    ]
+  }
 }
 
 resource "kubernetes_persistent_volume_claim" "this" {
@@ -178,5 +213,12 @@ resource "kubernetes_persistent_volume_claim" "this" {
         storage = var.storage
       }
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations,
+      metadata[0].labels
+    ]
   }
 }
