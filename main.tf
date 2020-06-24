@@ -160,6 +160,13 @@ resource "kubernetes_service" "this" {
       port = var.jnlp_port
     }
   }
+
+  lifecycle {
+    ignore_changes = [
+      metadata[0].annotations,
+      metadata[0].labels
+    ]
+  }
 }
 
 resource "kubernetes_ingress" "this" {

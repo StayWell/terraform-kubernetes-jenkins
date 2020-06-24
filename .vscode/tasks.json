@@ -46,7 +46,8 @@
     {
       "label": "Destroy Idempotency Check",
       "command": "terraform plan -detailed-exitcode -destroy test",
-      "type": "shell"
+      "type": "shell",
+      "problemMatcher": []
     }
   ]
 }
