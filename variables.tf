@@ -42,6 +42,11 @@ variable "web_port" {
   default     = "8080"
 }
 
+variable "node_port" {
+  description = "https://www.terraform.io/docs/providers/kubernetes/r/service.html#node_port"
+  default     = ""
+}
+
 variable "jnlp_port" {
   description = "JNLP port exposed for Jenkins agents"
   default     = "50000"

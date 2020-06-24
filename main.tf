@@ -39,7 +39,7 @@ resource "kubernetes_cluster_role_binding" "this" {
 
 resource "kubernetes_service_account" "this" {
   automount_service_account_token = true
-  
+
   metadata {
     name      = "this"
     namespace = kubernetes_namespace.this.metadata[0].name
@@ -151,8 +151,9 @@ resource "kubernetes_service" "this" {
     }
 
     port {
-      name = "http"
-      port = var.web_port
+      name      = "http"
+      port      = var.web_port
+      node_port = var.node_port
     }
 
     port {
@@ -175,7 +176,8 @@ resource "kubernetes_ingress" "this" {
     namespace = kubernetes_namespace.this.metadata[0].name
 
     annotations = {
-      "kubernetes.io/ingress.class" = "nginx"
+      "kubernetes.io/ingress.class"                    = "nginx"
+      "nginx.ingress.kubernetes.io/force-ssl-redirect" = true
     }
   }
 
@@ -185,7 +187,7 @@ resource "kubernetes_ingress" "this" {
 
       http {
         path {
-          path = "/*"
+          path = "/"
 
           backend {
             service_name = kubernetes_service.this.metadata[0].name
@@ -193,6 +195,10 @@ resource "kubernetes_ingress" "this" {
           }
         }
       }
+    }
+
+    tls {
+      hosts = [var.host]
     }
   }
 
