@@ -49,6 +49,11 @@ variable "node_port" {
 }
 
 variable "jnlp_port" {
-  description = "JNLP port exposed for Jenkins agents"
+  description = "https://www.jenkins.io/doc/book/managing/security/#tcp-port"
   default     = "50000"
+}
+
+variable "ssl" {
+  description = "https://kubernetes.github.io/ingress-nginx/user-guide/tls/#server-side-https-enforcement-through-redirect"
+  default     = true
 }
