@@ -53,7 +53,7 @@ variable "jnlp_port" {
   default     = "50000"
 }
 
-variable "ssl" {
+variable "ssl_redirect" {
   description = "https://kubernetes.github.io/ingress-nginx/user-guide/tls/#server-side-https-enforcement-through-redirect"
   default     = true
 }
