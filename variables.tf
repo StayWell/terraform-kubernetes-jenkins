@@ -44,7 +44,8 @@ variable "web_port" {
 
 variable "node_port" {
   description = "https://www.terraform.io/docs/providers/kubernetes/r/service.html#node_port"
-  default     = ""
+  type        = number
+  default     = null
 }
 
 variable "jnlp_port" {
