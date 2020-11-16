@@ -32,7 +32,7 @@ variable "image" {
   default     = "jenkins/jenkins:latest"
 }
 
-variable "id" {
+variable "namespace" {
   description = "Used to generate namespace and name resources"
   default     = "jenkins"
 }

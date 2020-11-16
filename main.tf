@@ -1,48 +1,6 @@
 resource "kubernetes_namespace" "this" {
   metadata {
-    name = var.id
-  }
-
-  lifecycle {
-    ignore_changes = [
-      metadata[0].annotations,
-      metadata[0].labels
-    ]
-  }
-}
-
-resource "kubernetes_cluster_role_binding" "this" {
-  metadata {
-    name = var.id
-  }
-
-  role_ref {
-    name      = "cluster-admin"
-    kind      = "ClusterRole"
-    api_group = "rbac.authorization.k8s.io"
-  }
-
-  subject {
-    name      = kubernetes_service_account.this.metadata[0].name
-    kind      = "ServiceAccount"
-    api_group = ""
-    namespace = kubernetes_namespace.this.metadata[0].name
-  }
-
-  lifecycle {
-    ignore_changes = [
-      metadata[0].annotations,
-      metadata[0].labels
-    ]
-  }
-}
-
-resource "kubernetes_service_account" "this" {
-  automount_service_account_token = true
-
-  metadata {
-    name      = "this"
-    namespace = kubernetes_namespace.this.metadata[0].name
+    name = var.namespace
   }
 
   lifecycle {
@@ -69,21 +27,18 @@ resource "kubernetes_deployment" "this" {
 
     selector {
       match_labels = {
-        app = var.id
+        app = var.namespace
       }
     }
 
     template {
       metadata {
         labels = {
-          app = var.id
+          app = var.namespace
         }
       }
 
       spec {
-        service_account_name            = kubernetes_service_account.this.metadata[0].name
-        automount_service_account_token = true
-
         container {
           name  = "this"
           image = var.image
@@ -147,7 +102,7 @@ resource "kubernetes_service" "this" {
     type = "NodePort"
 
     selector = {
-      app = var.id
+      app = var.namespace
     }
 
     port {
