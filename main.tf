@@ -13,7 +13,7 @@ resource "kubernetes_namespace" "this" {
 
 resource "kubernetes_deployment" "this" {
   metadata {
-    name      = "this"
+    name      = "jenkins"
     namespace = kubernetes_namespace.this.metadata[0].name
   }
 
@@ -27,20 +27,20 @@ resource "kubernetes_deployment" "this" {
 
     selector {
       match_labels = {
-        app = var.namespace
+        app = "jenkins"
       }
     }
 
     template {
       metadata {
         labels = {
-          app = var.namespace
+          app = "jenkins"
         }
       }
 
       spec {
         container {
-          name  = "this"
+          name  = "jenkins"
           image = var.image
 
           resources {
@@ -64,7 +64,7 @@ resource "kubernetes_deployment" "this" {
           }
 
           volume_mount {
-            name       = "home"
+            name       = "this"
             mount_path = "/var/jenkins_home"
           }
         }
@@ -74,7 +74,7 @@ resource "kubernetes_deployment" "this" {
         }
 
         volume {
-          name = "home"
+          name = "this"
 
           persistent_volume_claim {
             claim_name = kubernetes_persistent_volume_claim.this.metadata[0].name
@@ -94,7 +94,7 @@ resource "kubernetes_deployment" "this" {
 
 resource "kubernetes_service" "this" {
   metadata {
-    name      = "this"
+    name      = "jenkins"
     namespace = kubernetes_namespace.this.metadata[0].name
   }
 
@@ -102,7 +102,7 @@ resource "kubernetes_service" "this" {
     type = "NodePort"
 
     selector = {
-      app = var.namespace
+      app = "jenkins"
     }
 
     port {
@@ -127,7 +127,7 @@ resource "kubernetes_service" "this" {
 
 resource "kubernetes_ingress" "this" {
   metadata {
-    name      = "this"
+    name      = "jenkins"
     namespace = kubernetes_namespace.this.metadata[0].name
 
     annotations = {
@@ -168,13 +168,12 @@ resource "kubernetes_ingress" "this" {
 
 resource "kubernetes_persistent_volume_claim" "this" {
   metadata {
-    name      = "this"
+    name      = "jenkins"
     namespace = kubernetes_namespace.this.metadata[0].name
   }
 
   spec {
     access_modes       = ["ReadWriteOnce"]
-    volume_name        = var.volume_name
     storage_class_name = var.storage_class_name
 
     resources {

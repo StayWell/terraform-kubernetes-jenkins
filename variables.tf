@@ -1,7 +1,3 @@
-variable "volume_name" {
-  description = "https://www.terraform.io/docs/providers/kubernetes/r/persistent_volume_claim.html#volume_name"
-}
-
 variable "storage_class_name" {
   description = "https://www.terraform.io/docs/providers/kubernetes/r/persistent_volume_claim.html#storage_class_name"
   default     = ""
