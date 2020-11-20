@@ -1,6 +1,6 @@
 module "this" {
   source             = "../"
-  storage_class_name = kubernetes_storage_class.this.spec[0].name
+  storage_class_name = "jenkins"
 }
 
 resource "kubernetes_storage_class" "this" {
