@@ -12,6 +12,8 @@ resource "kubernetes_namespace" "this" {
 }
 
 resource "kubernetes_deployment" "this" {
+  wait_for_rollout = var.wait_for_rollout
+  
   metadata {
     name      = "jenkins"
     namespace = kubernetes_namespace.this.metadata[0].name

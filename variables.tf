@@ -58,3 +58,8 @@ variable "wait_until_bound" {
   description = "https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/persistent_volume_claim#wait_until_bound"
   default     = true
 }
+
+variable "wait_for_rollout" {
+  description = "https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/deployment#wait_for_rollout"
+  default     = true
+}
