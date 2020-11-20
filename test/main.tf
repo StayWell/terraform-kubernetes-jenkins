@@ -1,6 +1,6 @@
 module "this" {
   source             = "../"
-  storage_class_name = kubernetes_persistent_volume.this.spec[0].storage_class_name
+  storage_class_name = kubernetes_storage_class.this.spec[0].name
 }
 
 resource "kubernetes_storage_class" "this" {
