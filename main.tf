@@ -167,6 +167,8 @@ resource "kubernetes_ingress" "this" {
 }
 
 resource "kubernetes_persistent_volume_claim" "this" {
+  wait_until_bound = var.wait_until_bound
+
   metadata {
     name      = "jenkins"
     namespace = kubernetes_namespace.this.metadata[0].name

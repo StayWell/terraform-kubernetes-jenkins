@@ -1,6 +1,7 @@
 module "this" {
   source             = "../"
   storage_class_name = "jenkins"
+  wait_until_bound   = false
 }
 
 resource "kubernetes_storage_class" "this" {

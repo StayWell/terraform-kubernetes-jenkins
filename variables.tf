@@ -53,3 +53,8 @@ variable "ssl_redirect" {
   description = "https://kubernetes.github.io/ingress-nginx/user-guide/tls/#server-side-https-enforcement-through-redirect"
   default     = true
 }
+
+variable "wait_until_bound" {
+  description = "https://registry.terraform.io/providers/hashicorp/kubernetes/latest/docs/resources/persistent_volume_claim#wait_until_bound"
+  default     = true
+}
